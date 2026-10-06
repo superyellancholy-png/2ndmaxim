@@ -6,6 +6,17 @@
 
 这是当前确认版的私有技能仓库。完整工作流和排版规则见 [SKILL.md](SKILL.md)，配置说明见 [references/unified.md](references/unified.md)。
 
+## 两版案例
+
+两版使用同一段陈奕迅《陀飞轮》歌词，均放大“发票”，便于比较配色与背景效果。
+
+| 红黑底绿字 | 浅绿底红字 |
+| --- | --- |
+| <img src="docs/examples/darkroom.png" alt="红黑照片底绿字海报案例：曾付出几多心跳，来换取一堆堆的发票" width="360"> | <img src="docs/examples/mint.png" alt="浅绿织纹底红字海报案例：曾付出几多心跳，来换取一堆堆的发票" width="360"> |
+| 实拍照片、红黑蒙版与颗粒；需要提供原始照片。 | 浅绿织纹、柔光背景大字；无需提供照片。 |
+
+点击查看原图：[红黑版](docs/examples/darkroom.png) · [浅绿版](docs/examples/mint.png)。案例展示排版效果，正文、强调词和来源仍按每次任务确认。
+
 ## 安装
 
 需要 Node.js 与 npm，以及此私有仓库的访问权限。在目标项目根目录执行：
