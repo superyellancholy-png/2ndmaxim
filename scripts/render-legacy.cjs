@@ -4,6 +4,7 @@ const fs=require('node:fs'),path=require('node:path');
 function dependency(name){try{return require(name);}catch{return require(require.resolve(name,{paths:[process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES].filter(Boolean)}));}}
 const {createCanvas,loadImage,GlobalFonts}=dependency('@napi-rs/canvas');
 const root=path.resolve(__dirname,'..');
+const sharedAssets=require('./shared-assets.cjs');
 const help='Usage: node render-poster.cjs config.json output-directory\nCreates poster.png, poster.html and recipe.json. See references/parameters.md.';
 if(process.argv.includes('--help')){console.log(help);process.exit(0);}
 function num(v,def,min,max,key){v=v??def;if(typeof v!=='number'||!Number.isFinite(v)||v<min||v>max)throw Error(`${key} must be ${min}..${max}`);return v;}
@@ -13,6 +14,7 @@ function local(p,base){return path.resolve(base,p);}
 async function main(){
  if(process.argv.length!==4)throw Error(help);
  const configPath=path.resolve(process.argv[2]),base=path.dirname(configPath),raw=JSON.parse(fs.readFileSync(configPath,'utf8')),out=path.resolve(process.argv[3]);
+ const data=sharedAssets(out);
  if(typeof raw.photo!=='string'||!raw.photo)throw Error('photo is required; supply an original local photograph.');
  if(typeof raw.text!=='string'||!raw.text.trim())throw Error('text is required.');
  const preset=raw.preset??'darkroom';if(!['darkroom','monologue'].includes(preset))throw Error('preset must be darkroom or monologue');
@@ -114,9 +116,9 @@ async function main(){
  body=specs.map(s=>{if(cfg.layers.text){c.font=font(s.size);c.fillText(s.text,s.x,s.y);}return `<text x="${s.x}" y="${s.y}" font-size="${s.size}">${escape(s.text)}</text>`;}).join('\n');
  if(cfg.authorRule&&cfg.author){const x1=authorX-148,ruleY=cfg.authorBaseline-27;if(cfg.layers.text){c.fillRect(x1,ruleY,68,4);c.fillRect(x1+76,ruleY,68,4);}body+=`<rect x="${x1}" y="${ruleY}" width="68" height="4"/><rect x="${x1+76}" y="${ruleY}" width="68" height="4"/>`;}
  }
- if(useLogo){const logoBytes=fs.readFileSync(path.join(root,'assets/watermark-exact.png')),logo=await loadImage(logoBytes);const x=1,y=1513;if(cfg.layers.text)c.drawImage(logo,x,y,278,57);body+=`<image x="${x}" y="${y}" width="278" height="57" href="data:image/png;base64,${logoBytes.toString('base64')}"/>`;}
- const photoData=photo.toDataURL('image/png'),grainData=grain.toDataURL('image/png'),fontData=fontBytes.toString('base64');
- const html=`<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>暗房海报</title><style>@font-face{font-family:PosterFont;src:url(data:font/${fontPath.endsWith('.otf')?'otf':'ttf'};base64,${fontData})}*{box-sizing:border-box}body{margin:0;background:#171717;display:grid;min-height:100vh;place-items:center}.poster{position:relative;width:min(100vw,75vh);aspect-ratio:3/4;isolation:isolate;background:#090706}.layer{position:absolute;inset:0;width:100%;height:100%}svg{font-family:PosterFont;fill:${cfg.textColor}}</style><article class="poster" aria-label="暗房风格海报"><img class="layer" id="photo" alt="照片底层" style="display:${cfg.layers.photo?'block':'none'}" src="${photoData}"><div class="layer" id="tint" style="display:${cfg.layers.tint?'block':'none'};background:${cfg.tint};opacity:${cfg.opacity};mix-blend-mode:${cfg.blend}"></div><img class="layer" id="grain" alt="" src="${grainData}" style="display:${cfg.layers.grain?'block':'none'};opacity:${cfg.grainOpacity};mix-blend-mode:soft-light"><svg class="layer" id="text" viewBox="0 0 1200 1600" xmlns="http://www.w3.org/2000/svg" style="display:${cfg.layers.text?'block':'none'}">${body}</svg></article></html>`;
+ if(useLogo){const logoBytes=fs.readFileSync(path.join(root,'assets/watermark-exact.png')),logo=await loadImage(logoBytes);const x=1,y=1513;if(cfg.layers.text)c.drawImage(logo,x,y,278,57);body+=`<image x="${x}" y="${y}" width="278" height="57" href="${data(logoBytes)}"/>`;}
+ const photoData=data(photo.toBuffer('image/png')),grainData=data(grain.toBuffer('image/png')),fontData=data(fontBytes,fontPath.endsWith('.otf')?'font/otf':'font/ttf');
+ const html=`<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>暗房海报</title><style>@font-face{font-family:PosterFont;src:url(${fontData})}*{box-sizing:border-box}body{margin:0;background:#171717;display:grid;min-height:100vh;place-items:center}.poster{position:relative;width:min(100vw,75vh);aspect-ratio:3/4;isolation:isolate;background:#090706}.layer{position:absolute;inset:0;width:100%;height:100%}svg{font-family:PosterFont;fill:${cfg.textColor}}</style><article class="poster" aria-label="暗房风格海报"><img class="layer" id="photo" alt="照片底层" style="display:${cfg.layers.photo?'block':'none'}" src="${photoData}"><div class="layer" id="tint" style="display:${cfg.layers.tint?'block':'none'};background:${cfg.tint};opacity:${cfg.opacity};mix-blend-mode:${cfg.blend}"></div><img class="layer" id="grain" alt="" src="${grainData}" style="display:${cfg.layers.grain?'block':'none'};opacity:${cfg.grainOpacity};mix-blend-mode:soft-light"><svg class="layer" id="text" viewBox="0 0 1200 1600" xmlns="http://www.w3.org/2000/svg" style="display:${cfg.layers.text?'block':'none'}">${body}</svg></article></html>`;
  fs.mkdirSync(out,{recursive:true});fs.writeFileSync(path.join(out,'poster.png'),final.toBuffer('image/png'));fs.writeFileSync(path.join(out,'poster.html'),html);fs.writeFileSync(path.join(out,'recipe.json'),JSON.stringify({...cfg,renderedFont:raw.font?'user-supplied':'又又意宋',width:W,height:H},null,2));
  console.log(JSON.stringify({png:path.join(out,'poster.png'),html:path.join(out,'poster.html'),recipe:path.join(out,'recipe.json'),width:W,height:H,font:raw.font?'user-supplied':'又又意宋'}));
 }

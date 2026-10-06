@@ -4,7 +4,7 @@ const fs=require('node:fs'),path=require('node:path'),zlib=require('node:zlib');
 function dep(n){try{return require(n)}catch{return require(require.resolve(n,{paths:[process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES].filter(Boolean)}))}}
 const {createCanvas,loadImage,GlobalFonts}=dep('@napi-rs/canvas'),root=path.resolve(__dirname,'..');
 const esc=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-const data=(bytes,type='image/png')=>`data:${type};base64,${bytes.toString('base64')}`;
+const sharedAssets=require('./shared-assets.cjs');
 async function main(){
  if(process.argv.includes('--help')){console.log('node render-poster.cjs config.json output-directory; variant must be darkroom or mint. See references/unified.md');return}
  if(process.argv.length!==4)throw Error('Supply config.json and output-directory');
@@ -15,6 +15,7 @@ async function main(){
   const r=require('node:child_process').spawnSync(process.execPath,[path.join(__dirname,'render-legacy.cjs'),file,out],{stdio:'inherit'});if(r.status!==0)throw Error('Legacy rendering failed');return;
  }
  if(typeof cfg.text!=='string'||!cfg.text.trim())throw Error('text is required');
+ const data=sharedAssets(out);
  const mint=cfg.variant==='mint',W=1200,H=1600,spacing=-45,color=mint?'#b54434':'#b4ddbe';
  const canvas=createCanvas(W,H),c=canvas.getContext('2d'),bg=createCanvas(W,H),b=bg.getContext('2d');
  const fontName=cfg.font?path.resolve(base,cfg.font):path.join(root,'assets/fonts/YouyouYisong.ttf.gz');
@@ -32,14 +33,14 @@ async function main(){
   b.drawImage(im,(im.width-sw)*fx,(im.height-sh)*fy,sw,sh,0,0,W,H);
   const pixels=b.getImageData(0,0,W,H),d=pixels.data;
   for(let i=0;i<d.length;i+=4){const gray=d[i]*.2126+d[i+1]*.7152+d[i+2]*.0722;for(let k=0;k<3;k++)d[i+k]=((gray*(cfg.brightness??1.05)/255-.5)*(cfg.contrast??1.2)+.5)*255;}b.putImageData(pixels,0,0);
-  layerHTML.push(`<img class="layer" alt="照片" src="${bg.toDataURL()}">`);
+  layerHTML.push(`<img class="layer" alt="照片" src="${data(bg.toBuffer('image/png'))}">`);
   const opacity=cfg.opacity??.85;if(opacity<0||opacity>1)throw Error('opacity must be 0..1');
   b.globalAlpha=opacity;b.globalCompositeOperation='multiply';b.fillStyle='#c90b13';b.fillRect(0,0,W,H);
   layerHTML.push(`<div class="layer" style="background:#c90b13;opacity:${opacity};mix-blend-mode:multiply"></div>`);
   const grain=createCanvas(W,H),g=grain.getContext('2d'),noise=g.createImageData(W,H);let seed=71925;
   for(let y=0;y<H;y++)for(let x=0;x<W;x++){seed=(Math.imul(seed,1664525)+1013904223)|0;const v=128+((seed>>>0)/4294967296-.5)*170+(x%3===0?28:-8)+(y%4===0?18:-6),i=(y*W+x)*4;noise.data[i]=noise.data[i+1]=noise.data[i+2]=v;noise.data[i+3]=255;}g.putImageData(noise,0,0);
   const go=cfg.grainOpacity??.23;if(go<0||go>1)throw Error('grainOpacity must be 0..1');b.globalAlpha=go;b.globalCompositeOperation='soft-light';b.drawImage(grain,0,0);
-  layerHTML.push(`<img class="layer" alt="颗粒" style="opacity:${go};mix-blend-mode:soft-light" src="${grain.toDataURL()}">`);
+  layerHTML.push(`<img class="layer" alt="颗粒" style="opacity:${go};mix-blend-mode:soft-light" src="${data(grain.toBuffer('image/png'))}">`);
  }
  c.drawImage(bg,0,0);const backSVG=[],frontSVG=[];
  function glyphs(text,font,size,tracking){c.font=`${size}px ${font}`;let x=0,left=Infinity,right=-Infinity,ascent=0,descent=0;const chars=[];for(const ch of Array.from(text)){const m=c.measureText(ch);chars.push({ch,x});left=Math.min(left,x-m.actualBoundingBoxLeft);right=Math.max(right,x+m.actualBoundingBoxRight);ascent=Math.max(ascent,m.actualBoundingBoxAscent);descent=Math.max(descent,m.actualBoundingBoxDescent);x+=m.width+tracking;}return {chars,left,right,ascent,descent};}

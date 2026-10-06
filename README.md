@@ -42,4 +42,6 @@ node scripts/render-poster.cjs /path/to/config.json /path/to/任务名称/成品
 
 `scripts/` 为渲染脚本，`assets/` 为字体、底纹与 Logo，`references/` 为排版说明和参考图，`agents/` 为技能展示配置。
 
+生成的 HTML 共用成品目录下的 `_assets/` 字体与图片，避免重复内嵌。分享可编辑文件时打包整个成品目录，PNG 可单独分享。
+
 原始分卷、压缩包、PSD、历史海报和本机依赖不进入本仓库。素材使用说明见 [NOTICE.md](NOTICE.md)。
