@@ -1,0 +1,9 @@
+{
+  "name": "2ndmaxim",
+  "version": "1.0.0",
+  "private": true,
+  "description": "二流名言海报技能与渲染器",
+  "dependencies": {
+    "@napi-rs/canvas": "1.0.10"
+  }
+}
