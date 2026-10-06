@@ -1,5 +1,7 @@
 # 二流名言 · 2ndmaxim
 
+当前版本：**1.1（1.1.0）**。更新说明见 [CHANGELOG.md](CHANGELOG.md)。
+
 制作歌词和金句海报，支持红黑照片底绿字、浅绿织纹底红字两种版本。输出 PNG、可编辑 HTML 和排版参数 JSON。
 
 这是当前确认版的私有技能仓库。完整工作流和排版规则见 [SKILL.md](SKILL.md)，配置说明见 [references/unified.md](references/unified.md)。
@@ -15,7 +17,7 @@ cd .agents/skills/2ndmaxim
 npm ci
 ```
 
-在 Codex 中调用 `$2ndmaxim`。先选择版本，再确认正文断行、以粗体标出的放大词以及来源；确认后才生成图片。
+在 Codex 中调用 `$2ndmaxim`。先选择版本，再确认正文断行、正文下方以大号标题单列的放大词以及来源；确认后才生成图片。
 
 ## 渲染已确认配置
 
