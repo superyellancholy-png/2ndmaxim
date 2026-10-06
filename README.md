@@ -1,6 +1,6 @@
 # 二流名言 · 2ndmaxim
 
-当前版本：**1.1（1.1.0）**。更新说明见 [CHANGELOG.md](CHANGELOG.md)。
+当前版本：**1.1**。更新说明见 [CHANGELOG.md](CHANGELOG.md)。
 
 制作歌词和金句海报，支持红黑照片底绿字、浅绿织纹底红字两种版本。输出 PNG、可编辑 HTML 和排版参数 JSON。
 

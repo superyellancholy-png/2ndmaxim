@@ -7,7 +7,7 @@ metadata:
 
 # 二流名言
 
-当前版本：1.1（1.1.0）。更新记录见 [CHANGELOG.md](CHANGELOG.md)。
+当前版本：1.1。更新记录见 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 先选择版本
 
