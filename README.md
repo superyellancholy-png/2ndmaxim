@@ -1,10 +1,10 @@
 # 二流名言 · 2ndmaxim
 
-当前版本：**1.1**。更新说明见 [CHANGELOG.md](CHANGELOG.md)。
+当前版本：**1.2**。更新说明见 [CHANGELOG.md](CHANGELOG.md)。
 
 制作歌词和金句海报，支持红黑照片底绿字、浅绿织纹底红字两种版本。输出 PNG、可编辑 HTML 和排版参数 JSON。
 
-这是当前确认版的私有技能仓库。完整工作流和排版规则见 [SKILL.md](SKILL.md)，配置说明见 [references/unified.md](references/unified.md)。
+这是当前确认版的公开技能仓库。完整工作流和排版规则见 [SKILL.md](SKILL.md)，配置说明见 [references/unified.md](references/unified.md)。
 
 ## 两版案例
 
@@ -19,7 +19,7 @@
 
 ## 安装
 
-需要 Node.js 与 npm，以及此私有仓库的访问权限。在目标项目根目录执行：
+需要 Node.js 与 npm。在目标项目根目录执行：
 
 ```sh
 mkdir -p .agents/skills
@@ -58,3 +58,9 @@ node scripts/render-poster.cjs /path/to/config.json /path/to/任务名称/成品
 生成的 HTML 共用成品目录下的 `_assets/` 字体与图片，避免重复内嵌。分享可编辑文件时打包整个成品目录，PNG 可单独分享。
 
 原始分卷、压缩包、PSD、历史海报和本机依赖不进入本仓库。素材使用说明见 [NOTICE.md](NOTICE.md)。
+
+## 开源许可
+
+技能指令、渲染脚本及原创文档采用 [MIT License](LICENSE)，允许使用、修改、分享和商业使用，须保留版权与许可声明。
+
+字体由提供者确认开源，继续遵循各自原始开源许可。字体、图片、Logo、参考图、案例海报及其中引用的歌词不自动纳入 MIT；具体范围见 [NOTICE.md](NOTICE.md)。

@@ -2,12 +2,12 @@
 name: 2ndmaxim
 description: 二流名言，制作二流观众歌词和金句海报，支持红黑照片底绿字、浅绿织纹底红字两种版本。每次新制作先让用户选择版本，输出 PNG、可编辑分层 HTML 和参数 JSON。用于“二流名言”、暗房海报、红黑颗粒海报、浅绿歌词海报及使用这套模板出图的请求。
 metadata:
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # 二流名言
 
-当前版本：1.1。更新记录见 [CHANGELOG.md](CHANGELOG.md)。
+当前版本：1.2。更新记录见 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 先选择版本
 

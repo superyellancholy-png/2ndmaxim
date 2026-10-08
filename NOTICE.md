@@ -1,7 +1,21 @@
-# 素材与使用说明
+# 许可范围与素材说明
 
-本仓库为用户要求的私有技能备份与使用版本，没有为整个仓库授予新的开源许可。
+## MIT 许可范围
 
-字体、Logo、纹理与参考图片来自现有项目，保留用于本技能的排版和视觉参考。公开分发、商业使用或重新授权前，应分别核实对应素材的许可；私有保存不改变其原有权利。
+本仓库的技能指令、渲染脚本及原创文档采用根目录 [LICENSE](LICENSE) 中的 MIT License。适用文件包括 `SKILL.md`、`scripts/`、`README.md`、`CHANGELOG.md`、`references/` 中的原创 Markdown 说明，以及原创技能配置。Copyright (c) 2026 superyellancholy-png。
 
-`assets/fonts/OFL.txt` 是随项目保留的字体许可文件，不视为全部字体、图片或整个仓库的统一授权。第三方渲染依赖的许可由其发行包提供。
+## 字体
+
+字体提供者已确认提供的字体为开源字体。字体文件仍沿用各自原始开源许可，不由本仓库改授 MIT：
+
+- `assets/fonts/YouyouYisong.ttf.gz`：又又意宋。
+- `assets/fonts/KingHwaOldSong-v3.ttf.gz`：京華老宋体 v3.0。
+- `assets/fonts/NotoSansSC-Regular.ttf`：Noto Sans SC。
+
+保留随原项目提供的 `assets/fonts/OFL.txt`。此文件不视为所有字体的统一许可证明；本次未逐一核实前两款字体的具体许可版本及版权声明，使用或再分发时应遵循对应字体原始发布者的条款。
+
+## 图片与其他第三方内容
+
+`assets/` 中的图片和 Logo、`references/` 中的参考图片、`docs/examples/` 中的海报案例及其中引用的歌词不自动纳入 MIT 许可。本次公开展示及 MIT 声明不替第三方授予版权、商标或其他权利；如需再使用或分发，应按对应素材原有授权处理。
+
+第三方渲染依赖保留各发行包的原有许可。
