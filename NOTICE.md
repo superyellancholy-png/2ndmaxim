@@ -6,13 +6,13 @@
 
 ## 字体
 
-字体提供者已确认提供的字体为开源字体。字体文件仍沿用各自原始开源许可，不由本仓库改授 MIT：
+字体不纳入本仓库 MIT 许可。根据 2026-10-08 的来源核查，前两款应称为“作者声明授权的免费商用字体”，不能统一标为开源字体：
 
-- `assets/fonts/YouyouYisong.ttf.gz`：又又意宋。
-- `assets/fonts/KingHwaOldSong-v3.ttf.gz`：京華老宋体 v3.0。
-- `assets/fonts/NotoSansSC-Regular.ttf`：Noto Sans SC。
+- `assets/fonts/YouyouYisong.ttf.gz`（又又意宋）：猫啃网列为个人、企业免费商用；其整理的范围包含设计、嵌入及出版等用途，同时列出禁止修改、制作衍生版本和直接出售字库。页面明确用途整理仅供参考，具体需求以作者原始声明为准；公开再分发字体文件的具体条款未完成确认。
+- `assets/fonts/KingHwaOldSong-v3.ttf.gz`（京華老宋体 v3.0）：作者声明允许免费商用、嵌入和复制传播，禁止单独出售字体盈利，限制修改字形及传播修改版。不能按 MIT 或 OFL 自行修改、再授权。
+- `assets/fonts/NotoSansSC-Regular.ttf`：原始两个下载包均附带此字体和 `OFL.txt`。当前两种配色及旧版渲染器默认均未使用此字体。`OFL.txt` 不适用于前两款字体。
 
-保留随原项目提供的 `assets/fonts/OFL.txt`。此文件不视为所有字体的统一许可证明；本次未逐一核实前两款字体的具体许可版本及版权声明，使用或再分发时应遵循对应字体原始发布者的条款。
+来源链接、范围及核查限制见 [字体授权核查](references/font-licensing.md)。字体本身的版权声明和已有许可文件保留；本仓库的说明是核查摘要，不替代原始许可。
 
 ## 图片与其他第三方内容
 

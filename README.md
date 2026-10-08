@@ -63,4 +63,4 @@ node scripts/render-poster.cjs /path/to/config.json /path/to/任务名称/成品
 
 技能指令、渲染脚本及原创文档采用 [MIT License](LICENSE)，允许使用、修改、分享和商业使用，须保留版权与许可声明。
 
-字体由提供者确认开源，继续遵循各自原始开源许可。字体、图片、Logo、参考图、案例海报及其中引用的歌词不自动纳入 MIT；具体范围见 [NOTICE.md](NOTICE.md)。
+又又意宋、京華老宋体采用作者声明的免费商用授权，包含修改等限制；字体沿用各自许可，具体核查见 [字体授权说明](references/font-licensing.md)。字体、图片、Logo、参考图、案例海报及其中引用的歌词不自动纳入 MIT；具体范围见 [NOTICE.md](NOTICE.md)。
